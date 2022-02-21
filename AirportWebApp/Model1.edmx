@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AirportDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Airlines">
+          <Key>
+            <PropertyRef Name="AirlineID" />
+          </Key>
+          <Property Name="AirlineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Airline" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AirportCode">
+          <Key>
+            <PropertyRef Name="CodeID" />
+          </Key>
+          <Property Name="CodeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodeName" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AirportTimeTable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AirlineID" Type="int" Nullable="false" />
+          <Property Name="CodeID" Type="int" Nullable="false" />
+          <Property Name="CityID" Type="int" Nullable="false" />
+          <Property Name="TermID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Terminals">
+          <Key>
+            <PropertyRef Name="TermID" />
+          </Key>
+          <Property Name="TermID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Terminal" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AirportTimeTable_Airlines">
+          <End Role="Airlines" Type="Self.Airlines" Multiplicity="1" />
+          <End Role="AirportTimeTable" Type="Self.AirportTimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airlines">
+              <PropertyRef Name="AirlineID" />
+            </Principal>
+            <Dependent Role="AirportTimeTable">
+              <PropertyRef Name="AirlineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AirportTimeTable_AirportCode">
+          <End Role="AirportCode" Type="Self.AirportCode" Multiplicity="1" />
+          <End Role="AirportTimeTable" Type="Self.AirportTimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AirportCode">
+              <PropertyRef Name="CodeID" />
+            </Principal>
+            <Dependent Role="AirportTimeTable">
+              <PropertyRef Name="CodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AirportTimeTable_Cities">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="AirportTimeTable" Type="Self.AirportTimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="AirportTimeTable">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AirportTimeTable_Terminals">
+          <End Role="Terminals" Type="Self.Terminals" Multiplicity="1" />
+          <End Role="AirportTimeTable" Type="Self.AirportTimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Terminals">
+              <PropertyRef Name="TermID" />
+            </Principal>
+            <Dependent Role="AirportTimeTable">
+              <PropertyRef Name="TermID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AirportDataModelStoreContainer">
+          <EntitySet Name="Airlines" EntityType="Self.Airlines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AirportCode" EntityType="Self.AirportCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AirportTimeTable" EntityType="Self.AirportTimeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Terminals" EntityType="Self.Terminals" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AirportTimeTable_Airlines" Association="Self.FK_AirportTimeTable_Airlines">
+            <End Role="Airlines" EntitySet="Airlines" />
+            <End Role="AirportTimeTable" EntitySet="AirportTimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AirportTimeTable_AirportCode" Association="Self.FK_AirportTimeTable_AirportCode">
+            <End Role="AirportCode" EntitySet="AirportCode" />
+            <End Role="AirportTimeTable" EntitySet="AirportTimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AirportTimeTable_Cities" Association="Self.FK_AirportTimeTable_Cities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="AirportTimeTable" EntitySet="AirportTimeTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AirportTimeTable_Terminals" Association="Self.FK_AirportTimeTable_Terminals">
+            <End Role="Terminals" EntitySet="Terminals" />
+            <End Role="AirportTimeTable" EntitySet="AirportTimeTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AirportDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Airlines">
+          <Key>
+            <PropertyRef Name="AirlineID" />
+          </Key>
+          <Property Name="AirlineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Airline" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AirportTimeTables" Relationship="Self.FK_AirportTimeTable_Airlines" FromRole="Airlines" ToRole="AirportTimeTable" />
+        </EntityType>
+        <EntityType Name="AirportCode">
+          <Key>
+            <PropertyRef Name="CodeID" />
+          </Key>
+          <Property Name="CodeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodeName" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AirportTimeTables" Relationship="Self.FK_AirportTimeTable_AirportCode" FromRole="AirportCode" ToRole="AirportTimeTable" />
+        </EntityType>
+        <EntityType Name="AirportTimeTable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AirlineID" Type="Int32" Nullable="false" />
+          <Property Name="CodeID" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="TermID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Airline" Relationship="Self.FK_AirportTimeTable_Airlines" FromRole="AirportTimeTable" ToRole="Airlines" />
+          <NavigationProperty Name="AirportCode" Relationship="Self.FK_AirportTimeTable_AirportCode" FromRole="AirportTimeTable" ToRole="AirportCode" />
+          <NavigationProperty Name="City" Relationship="Self.FK_AirportTimeTable_Cities" FromRole="AirportTimeTable" ToRole="Cities" />
+          <NavigationProperty Name="Terminal" Relationship="Self.FK_AirportTimeTable_Terminals" FromRole="AirportTimeTable" ToRole="Terminals" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AirportTimeTables" Relationship="Self.FK_AirportTimeTable_Cities" FromRole="Cities" ToRole="AirportTimeTable" />
+        </EntityType>
+        <EntityType Name="Terminals">
+          <Key>
+            <PropertyRef Name="TermID" />
+          </Key>
+          <Property Name="TermID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Terminal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AirportTimeTables" Relationship="Self.FK_AirportTimeTable_Terminals" FromRole="Terminals" ToRole="AirportTimeTable" />
+        </EntityType>
+        <Association Name="FK_AirportTimeTable_Airlines">
+          <End Role="Airlines" Type="AirportDataModel.Airlines" Multiplicity="1" />
+          <End Role="AirportTimeTable" Type="Self.AirportTimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airlines">
+              <PropertyRef Name="AirlineID" />
+            </Principal>
+            <Dependent Role="AirportTimeTable">
+              <PropertyRef Name="AirlineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AirportTimeTable_AirportCode">
+          <End Role="AirportCode" Type="Self.AirportCode" Multiplicity="1" />
+          <End Role="AirportTimeTable" Type="Self.AirportTimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AirportCode">
+              <PropertyRef Name="CodeID" />
+            </Principal>
+            <Dependent Role="AirportTimeTable">
+              <PropertyRef Name="CodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AirportTimeTable_Cities">
+          <End Role="Cities" Type="AirportDataModel.Cities" Multiplicity="1" />
+          <End Role="AirportTimeTable" Type="Self.AirportTimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="AirportTimeTable">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AirportTimeTable_Terminals">
+          <End Role="Terminals" Type="AirportDataModel.Terminals" Multiplicity="1" />
+          <End Role="AirportTimeTable" Type="Self.AirportTimeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Terminals">
+              <PropertyRef Name="TermID" />
+            </Principal>
+            <Dependent Role="AirportTimeTable">
+              <PropertyRef Name="TermID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AirportDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Airlines1" EntityType="AirportDataModel.Airlines" />
+          <EntitySet Name="AirportCodes" EntityType="Self.AirportCode" />
+          <EntitySet Name="AirportTimeTables" EntityType="Self.AirportTimeTable" />
+          <EntitySet Name="Cities1" EntityType="AirportDataModel.Cities" />
+          <EntitySet Name="Terminals1" EntityType="AirportDataModel.Terminals" />
+          <AssociationSet Name="FK_AirportTimeTable_Airlines" Association="Self.FK_AirportTimeTable_Airlines">
+            <End Role="Airlines" EntitySet="Airlines1" />
+            <End Role="AirportTimeTable" EntitySet="AirportTimeTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AirportTimeTable_AirportCode" Association="Self.FK_AirportTimeTable_AirportCode">
+            <End Role="AirportCode" EntitySet="AirportCodes" />
+            <End Role="AirportTimeTable" EntitySet="AirportTimeTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AirportTimeTable_Cities" Association="Self.FK_AirportTimeTable_Cities">
+            <End Role="Cities" EntitySet="Cities1" />
+            <End Role="AirportTimeTable" EntitySet="AirportTimeTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AirportTimeTable_Terminals" Association="Self.FK_AirportTimeTable_Terminals">
+            <End Role="Terminals" EntitySet="Terminals1" />
+            <End Role="AirportTimeTable" EntitySet="AirportTimeTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AirportDataModelStoreContainer" CdmEntityContainer="AirportDB">
+          <EntitySetMapping Name="Airlines1">
+            <EntityTypeMapping TypeName="AirportDataModel.Airlines">
+              <MappingFragment StoreEntitySet="Airlines">
+                <ScalarProperty Name="AirlineID" ColumnName="AirlineID" />
+                <ScalarProperty Name="Airline" ColumnName="Airline" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AirportCodes">
+            <EntityTypeMapping TypeName="AirportDataModel.AirportCode">
+              <MappingFragment StoreEntitySet="AirportCode">
+                <ScalarProperty Name="CodeID" ColumnName="CodeID" />
+                <ScalarProperty Name="CodeName" ColumnName="CodeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AirportTimeTables">
+            <EntityTypeMapping TypeName="AirportDataModel.AirportTimeTable">
+              <MappingFragment StoreEntitySet="AirportTimeTable">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AirlineID" ColumnName="AirlineID" />
+                <ScalarProperty Name="CodeID" ColumnName="CodeID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="TermID" ColumnName="TermID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities1">
+            <EntityTypeMapping TypeName="AirportDataModel.Cities">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="City" ColumnName="City" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Terminals1">
+            <EntityTypeMapping TypeName="AirportDataModel.Terminals">
+              <MappingFragment StoreEntitySet="Terminals">
+                <ScalarProperty Name="TermID" ColumnName="TermID" />
+                <ScalarProperty Name="Terminal" ColumnName="Terminal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
