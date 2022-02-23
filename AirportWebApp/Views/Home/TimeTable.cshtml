@@ -1,0 +1,48 @@
+﻿@model IEnumerable<AirportWebApp.AirportTimeTable>
+
+@{
+    ViewBag.Title = "TimeTable";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>TimeTable</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Airline.Airline)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AirportCode.CodeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Terminal.Terminal)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Airline.Airline)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AirportCode.CodeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Terminal.Terminal)
+        </td>
+       
+    </tr>
+}
+
+</table>
