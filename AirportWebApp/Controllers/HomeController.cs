@@ -19,5 +19,9 @@ namespace AirportWebApp.Controllers
         {
             return View(dB.AirportTimeTables.ToList());
         }
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
     }
 }
