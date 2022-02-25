@@ -250,6 +250,7 @@
     <Content Include="Views\AirportTimeTables\Index.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Home\TimeTable.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
